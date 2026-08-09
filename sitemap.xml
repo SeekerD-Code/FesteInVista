@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    <!-- Pagina Principale (Mappa / Home) -->
+    <url>
+        <loc>https://seekerdcode.it/FestMap/</loc>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+    <!-- Pagine Principali dell'App -->
+    <url>
+        <loc>https://seekerdcode.it/FestMap/elenco.html</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://seekerdcode.it/FestMap/calendario.html</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://seekerdcode.it/FestMap/preferiti.html</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://seekerdcode.it/FestMap/mappa-preferiti.html</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- Categorie di Eventi (Sottocartella eventi/) -->
+    <url>
+        <loc>https://seekerdcode.it/FestMap/eventi/wild.html</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://seekerdcode.it/FestMap/eventi/comics.html</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://seekerdcode.it/FestMap/eventi/food.html</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://seekerdcode.it/FestMap/eventi/folk.html</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+</urlset>
