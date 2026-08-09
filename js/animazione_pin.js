@@ -24,7 +24,7 @@ window.addEventListener('load', () => {
     const splash = document.getElementById('splash-screen');
 
     // Usiamo localStorage così lo splash compare UNA sola volta in assoluto (o finché non pulisce i dati)
-    // Se preferisci che appaia solo alla prima apertura in assoluto, tieni localStorage. 
+    // Se preferisci che appaia solo alla prima apertura in assoluto, tieni localStorage.
     // Se vuoi che non appaia più quando clicchi Home, localStorage risolve il problema.
     if (localStorage.getItem('festmap_splash_visto')) {
         if (splash) {

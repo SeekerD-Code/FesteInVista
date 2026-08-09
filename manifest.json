@@ -1,6 +1,6 @@
 {
-  "name": "FestMap Italia",
-  "short_name": "FestMap",
+  "name": "FesteInVista Italia",
+  "short_name": "FesteInVista",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#ffffff",

@@ -57,45 +57,57 @@ export function apriModaleDettagli(ev) {
     window.location.href = targetUrl;
 }
 
-let deferredPrompt;
+// --- Gestione Unificata Installazione PWA (Desktop & Mobile) ---
+let deferredPrompt = null;
 
-// 1. Ascolta l'evento che permette l'installazione
 window.addEventListener('beforeinstallprompt', (e) => {
-    // Impedisce al browser di mostrare il prompt nativo automaticamente
+    // Impedisce al browser di mostrare il banner automatico
     e.preventDefault();
-    // Salva l'evento per usarlo quando clicchiamo il pulsante
     deferredPrompt = e;
 
-    // Rendi visibili i pulsanti (sia quello PC che quello Mobile)
+    // Mostra il pulsante PC se siamo su desktop
     const pcBtn = document.getElementById('pwa-install-pc-btn');
-    const mobileBtn = document.getElementById('pwa-install-mobile-float');
+    if (pcBtn) {
+        pcBtn.style.display = 'flex';
+    }
 
-    if (pcBtn) pcBtn.style.display = 'flex';
-    if (mobileBtn) mobileBtn.style.display = 'flex';
+    // Mostra il quadratino mobile se siamo su smartphone
+    const mobileFloatBtn = document.getElementById('pwa-install-mobile-float');
+    if (mobileFloatBtn) {
+        mobileFloatBtn.style.display = 'flex';
+    }
 });
 
-// 2. Funzione per gestire il click sui pulsanti
-function installApp() {
-    if (deferredPrompt) {
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-                console.log('Utente ha accettato l\'installazione');
-            }
-            deferredPrompt = null;
-        });
+// Funzione comune per attivare il prompt
+async function triggerPwaInstall() {
+    if (!deferredPrompt) return;
+
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+
+    if (outcome === 'accepted') {
+        console.log('Utente ha installato la PWA');
     }
+
+    deferredPrompt = null;
+    hideAllInstallButtons();
 }
 
-// 3. Collega l'evento ai pulsanti
-document.getElementById('pwa-install-pc-btn')?.addEventListener('click', installApp);
-document.getElementById('pwa-install-mobile-float')?.addEventListener('click', installApp);
+function hideAllInstallButtons() {
+    const pcBtn = document.getElementById('pwa-install-pc-btn');
+    if (pcBtn) pcBtn.style.display = 'none';
 
-// Nascondi i bottoni se l'app è già installata
-window.addEventListener('appinstalled', (evt) => {
-    document.getElementById('pwa-install-pc-btn').style.display = 'none';
-    document.getElementById('pwa-install-mobile-float').style.display = 'none';
+    const mobileFloatBtn = document.getElementById('pwa-install-mobile-float');
+    if (mobileFloatBtn) mobileFloatBtn.style.display = 'none';
+}
+
+// Associa i click ai rispettivi pulsanti
+document.addEventListener('click', (e) => {
+    if (e.target.closest('#pwa-install-pc-btn') || e.target.closest('#pwa-install-mobile-float')) {
+        triggerPwaInstall();
+    }
 });
+
 window.addEventListener('appinstalled', () => {
     console.log('PWA installata correttamente!');
     hideAllInstallButtons();

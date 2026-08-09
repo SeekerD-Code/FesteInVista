@@ -486,7 +486,7 @@ function mostraModaleDettaglioEvento(ev) {
     const inizioFormatted = ev.data_inizio_grezza ? ev.data_inizio_grezza.replace(/-/g, '') : '';
     const fineFormatted = (ev.data_fine_grezza ? ev.data_fine_grezza : ev.data_inizio_grezza).replace(/-/g, '');
 
-    const urlGCal = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(titolo)}&dates=${inizioFormatted}/${fineFormatted}&location=${encodeURIComponent(luogo)}&details=${encodeURIComponent('Evento gestito tramite FestMap')}`;
+    const urlGCal = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(titolo)}&dates=${inizioFormatted}/${fineFormatted}&location=${encodeURIComponent(luogo)}&details=${encodeURIComponent('Evento gestito tramite FesteInVista')}`;
 
     let dateFormattateTestoModal = '';
     if (ev.intervalliDate && ev.intervalliDate.length > 0) {
