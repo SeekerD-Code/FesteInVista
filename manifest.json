@@ -1,18 +1,19 @@
 {
   "name": "FesteInVista Italia",
   "short_name": "FesteInVista",
-  "start_url": "index.html",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#4A148C",
   "icons": [
     {
-      "src": "icons/icon-192-FV.png",
+      "src": "/icons/icon-192-FV.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icons/icon-512-FV.png",
+      "src": "/icons/icon-512-FV.png",
       "sizes": "512x512",
       "type": "image/png"
     }
