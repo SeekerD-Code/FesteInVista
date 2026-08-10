@@ -21,7 +21,7 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
 }).addTo(map);
 
 // --- AGGIUNGI QUI IL TRACCIAMENTO DEI CONFINI ITALIANI ---
-fetch('https://raw.githubusercontent.com/opengeohub/spatial-tiler/main/data/italy_boundary.geojson')
+fetch('/italy_regions.geojson')
     .then(response => response.json())
     .then(data => {
         L.geoJSON(data, {
