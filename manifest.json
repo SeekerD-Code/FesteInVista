@@ -21,14 +21,14 @@
   "screenshots": [
     {
       "src": "/images/screenshot-mobile.png",
-      "sizes": "540x720",
+      "sizes": "479x790",
       "type": "image/png",
       "form_factor": "narrow",
       "label": "FesteInVista su Smartphone"
     },
     {
       "src": "/images/screenshot-wide.png",
-      "sizes": "1280x800",
+      "sizes": "1915x890",
       "type": "image/png",
       "form_factor": "wide",
       "label": "FesteInVista su Desktop"
