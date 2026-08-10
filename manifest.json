@@ -13,8 +13,8 @@
       "type": "image/ico"
     },
     {
-      "src": "/icons/icon-512-FV.ico",
-      "sizes": "512x512",
+      "src": "/icons/icon-256-FV.ico",
+      "sizes": "256x256",
       "type": "image/ico"
     }
   ]
