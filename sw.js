@@ -1,4 +1,4 @@
-const CACHE_NAME = 'festmap-v4';
+const CACHE_NAME = 'festeinvista-v1';
 const ASSETS = [
     './',
     './index.html',
