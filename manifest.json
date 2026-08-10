@@ -10,12 +10,12 @@
     {
       "src": "/icons/icon-192-FV.ico",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/ico"
     },
     {
       "src": "/icons/icon-512-FV.ico",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/ico"
     }
   ]
 }
