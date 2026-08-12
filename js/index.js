@@ -14,11 +14,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function processaValori(rawEventi) {
-        const eventiNormalizzati = rawEventi ? rawEventi.map(e => ({
-            ...e,
-            data_inizio_grezza: normalizzaDataPerFiltri(e.data_inizio_grezza),
-            data_fine_grezza: normalizzaDataPerFiltri(e.data_fine_grezza || e.data_inizio_grezza)
-        })) : [];
+        const eventiNormalizzati = rawEventi ? rawEventi.map(e => {
+            const dataInizioNorm = normalizzaDataPerFiltri(e.data_inizio_grezza);
+            const dataFineNorm = normalizzaDataPerFiltri(e.data_fine_grezza || e.data_inizio_grezza);
+
+            return {
+                ...e,
+                data_inizio_grezza: dataInizioNorm,
+                data_fine_grezza: dataFineNorm,
+                // Aggiungiamo le proprietà standard per compatibilità totale con filters-utils.js
+                data_inizio_standard: dataInizioNorm,
+                data_fine_standard: dataFineNorm
+            };
+        }) : [];
 
         return raggruppaEventiVicini(eventiNormalizzati);
     }
@@ -210,6 +218,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         const filtrati = filtraEventiElenco(eventiTotali);
         renderizzaEventi(filtrati);
     }
+
+    document.addEventListener('date-selection-changed', () => {
+        eseguiFiltroERender();
+    });
 
     if (eventiTotali && eventiTotali.length > 0) {
         renderizzaEventi(eventiTotali);

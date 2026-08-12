@@ -246,6 +246,10 @@ export function initCustomCalendar() {
             inputDa.value = selectedStartDate || '';
             inputA.value = selectedEndDate || selectedStartDate || '';
 
+            // Lancia l'evento personalizzato che index.js ascolterà
+           const event = new CustomEvent('date-selection-changed');
+            document.dispatchEvent(event);
+
             // Aggiorna etichetta sul bottone principale
             if (selectedStartDate && selectedEndDate) {
                 summaryEl.textContent = `📅 ${selectedStartDate.split('-').reverse().join('/')} ➔ ${selectedEndDate.split('-').reverse().join('/')}`;
