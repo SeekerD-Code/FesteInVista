@@ -52,7 +52,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
             selectMese.innerHTML = optionsHtml;
         }
-
         selectMese.addEventListener('change', () => eseguiFiltroERender());
     }
 
