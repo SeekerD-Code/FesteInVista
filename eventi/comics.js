@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 data_inizio_grezza: normalizzaDataPerFiltri(e.data_inizio_grezza),
                 data_fine_grezza: normalizzaDataPerFiltri(e.data_fine_grezza || e.data_inizio_grezza)
             })) : [];
-
         return raggruppaEventiVicini(eventiFiltratiNormalizzati);
     }
 
