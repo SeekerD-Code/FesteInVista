@@ -9,9 +9,7 @@
         display: none !important;
     }
 
-
     /* --- 2. Riduzione altezza e compattamento delle card --- */
-
 /* Riduciamo i margini interni del contenitore principale della card */
 .event-card,
 .events-list .event-card,
