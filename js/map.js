@@ -531,3 +531,4 @@ document.addEventListener('click', (e) => {
 document.addEventListener('DOMContentLoaded', () => {
     initCustomCalendar();
 });
+ 
