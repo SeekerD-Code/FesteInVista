@@ -29,7 +29,6 @@ function formattaDataItaliana(dataStr) {
     if (dataStr.includes('/')) return dataStr;
     return dataStr;
 }
-
 let map;
 let markerLayerGroup;
 
