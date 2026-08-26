@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('../sw.js');
     }
-
     function processaValori(rawEventi) {
         const eventiFiltratiNormalizzati = rawEventi ? rawEventi
             .filter(e => {
