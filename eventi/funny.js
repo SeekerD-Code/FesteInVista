@@ -42,7 +42,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             popolaMesiSelect(eventiTotali);
         } else {
             const mesiDisponibili = [...new Set(eventiTotali.map(e => e.data_inizio_grezza ? e.data_inizio_grezza.substring(0, 7) : null))].filter(Boolean).sort();
-
             let optionsHtml = '<option value="">Tutti i mesi</option>';
             mesiDisponibili.forEach(meseStr => {
                 const [anno, mese] = meseStr.split('-');
