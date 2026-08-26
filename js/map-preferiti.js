@@ -22,10 +22,12 @@ function formattaDataItaliana(dataStr) {
     if (typeof dataStr === 'string' && dataStr.includes('T')) {
         dataStr = dataStr.split('T')[0];
     }
+    
     const parti = dataStr.split('-');
     if (parti.length === 3 && parti[0].length === 4) {
         return `${parti[2]}/${parti[1]}/${parti[0]}`;
     }
+    
     if (dataStr.includes('/')) return dataStr;
     return dataStr;
 }
