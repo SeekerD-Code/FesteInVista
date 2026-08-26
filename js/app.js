@@ -122,3 +122,4 @@ window.addEventListener('appinstalled', () => {
     hideAllInstallButtons();
     deferredPrompt = null;
 });
+ 
