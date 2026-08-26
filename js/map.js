@@ -56,6 +56,7 @@ function getPngCategoria(categoria) {
     const cat = (categoria || '').toLowerCase().trim();
     if (cat.includes('folk') || cat.includes('tradizione')) return "images/folk.webp";
     if (cat.includes('comic') || cat.includes('cosplay') || cat.includes('fumetto')) return "images/comics.webp";
+    
     if (cat.includes('funny') || cat.includes('funny')) return "images/funny.webp";
     if (cat.includes('food') || cat.includes('sagra') || cat.includes('cibo')) return "images/food.webp";
     return "images/food.webp";
