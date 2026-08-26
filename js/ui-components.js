@@ -32,6 +32,7 @@ export function creaCardEvento(evento, isPassato = false) {
         iconaCategoriaSrc = 'images/folk.webp';
     } else if (categoriaEvento.includes('comic') || categoriaEvento.includes('cosplay') || categoriaEvento.includes('fumetto')) {
         iconaCategoriaSrc = 'images/comics.webp';
+        
     } else if (categoriaEvento.includes('funny') || categoriaEvento.includes('natura')) {
         iconaCategoriaSrc = 'images/funny.webp';
     } else if (categoriaEvento.includes('food') || categoriaEvento.includes('sagra') || categoriaEvento.includes('cibo')) {
