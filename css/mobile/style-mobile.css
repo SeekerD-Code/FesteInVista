@@ -19,7 +19,7 @@
     /* --- Quadratino Fluttuante PWA (Smartphone) --- */
     .pwa-mobile-float-btn {
         position: fixed !important;
-        top: 30px !important;
+        top: 35px !important;
         right: 5px !important;
         background: #4A148C;
         color: white;
@@ -54,9 +54,9 @@
         transform: scale(0.92);
         background: #6a1bb2;
     }
-    /* Nascondi il pulsante desktop su schermi mobile */
+
+/* Nascondi il pulsante desktop su schermi mobile */
     #pwa-install-pc-btn {
         display: none !important;
     }
-}
 }
