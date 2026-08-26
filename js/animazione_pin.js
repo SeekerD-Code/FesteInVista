@@ -16,7 +16,7 @@ const fasiCaricamento = [
     { time: 2500, text: "Trovati eventi food...", png: "images/food.png", classeAnim: ".anim-food" },
     { time: 5000, text: "Trovati eventi Comics...", png: "images/comics.png", classeAnim: ".anim-comics" },
     { time: 7500, text: "Trovati eventi Folk...", png: "images/folk.png", classeAnim: ".anim-folk" },
-    { time: 10000, text: "Trovati eventi Wild...", png: "images/wild.png", classeAnim: ".anim-wild" }
+    { time: 10000, text: "Trovati eventi Wild...", png: "images/funny.png", classeAnim: ".anim-funny" }
 ];
 
 // 3. Avvio della sequenza all'evento di caricamento della pagina

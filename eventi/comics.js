@@ -3,7 +3,7 @@ import { creaCardEvento, popolaMesiSelect, initCustomCalendar } from '../js/ui-c
 import { normalizzaDataPerFiltri } from '../js/filters-utils.js';
 import { apriModaleDettagli } from '../js/app.js';
 
-const CATEGORIA_CORRENTE = 'comics'; // Cambiare in 'food', 'folk', 'wild' nelle rispettive pagine
+const CATEGORIA_CORRENTE = 'comics'; // Cambiare in 'food', 'folk', 'funny' nelle rispettive pagine
 
 document.addEventListener('DOMContentLoaded', async () => {
     // 1. Service Worker

@@ -2,9 +2,18 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js')
-            .catch(err => console.log("Service Worker non registrato:", err));
-    }
+    navigator.serviceWorker.register('/sw.js').then((reg) => {
+        reg.addEventListener('updatefound', () => {
+            const newWorker = reg.installing;
+            newWorker.addEventListener('statechange', () => {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                    console.log("Nuova versione disponibile, aggiorno l'app...");
+                    window.location.reload();
+                }
+            });
+        });
+    }).catch(err => console.log("Service Worker non registrato:", err));
+}
 
     // Gestione globale del menu laterale (Drawer) per tutte le pagine
     document.addEventListener('click', (event) => {

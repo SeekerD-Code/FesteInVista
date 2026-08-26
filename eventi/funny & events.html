@@ -13,14 +13,14 @@
     </script>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>FesteInVista - Comics & Cosplay</title>
+    <title>FesteInVista - Wild Festivals</title>
 
     <meta name="description" content="Trova sagre, comicon, fiere a tema ed eventi in Italia su Feste in Vista. Esplora la mappa e scopri cosa fare nel weekend.">
 
     <!-- Open Graph (Anteprime Social & Chat) -->
-    <meta property="og:title" content="Feste in Vista - Eventi Comics">
+    <meta property="og:title" content="Feste in Vista - Eventi Food">
     <meta property="og:description" content="La mappa degli eventi, sagre e comicon in Italia.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="./favicon.ico"> <!-- Oppure il percorso della tua immagine di anteprima -->
@@ -29,10 +29,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Henny+Penny&display=swap" rel="stylesheet">
 
-    <link rel="manifest" href="../manifest.json">
-    <meta name="theme-color" content="#4A148C">
+        <link rel="manifest" href="../manifest.json">
+        <meta name="theme-color" content="#4A148C">
 
-    <!-- Fogli di stile con percorsi corretti -->
+    <!-- Base (comune) - Percorsi risalendo di una cartella -->
+
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/style-menu.css">
     <link rel="stylesheet" href="../css/style-pc.css">
@@ -41,10 +42,16 @@
     <link rel="stylesheet" href="../css/mobile/style-mobile.css">
     <link rel="stylesheet" href="../css/mobile/style-mobile-index.css">
     <link rel="stylesheet" href="../css/mobile/style-mobile-menu.css">
+    <link rel="stylesheet" href="../css/mobile/style-mobyle-splashscreen.css">
 
     <link rel="icon" type="image/x-icon" href="./favicon.ico">
 
 
+    <!-- Foglio di stile specifico per la sezione eventi/categorie -->
+    <link rel="stylesheet" href="style-eventi.css">
+
+
+    <input type="hidden" id="filter-tipo" value="funny">
 </head>
 <body>
 
@@ -84,9 +91,9 @@
 
     <!-- INTESTAZIONE CATEGORIA -->
     <section class="category-header-section" style="padding: 15px 20px 5px 20px; display: flex; align-items: center; gap: 15px;">
-        <img src="../images/comics.webp" alt="Icona Comics" style="width: 45px; height: 45px; object-fit: contain;">
+        <img src="../images/funny.webp" alt="Icona funny" style="width: 45px; height: 45px; object-fit: contain;">
         <div>
-            <h1 style="margin: 0; font-size: 1.5rem; color: #333;">Comics & Cosplay</h1>
+            <h1 style="margin: 0; font-size: 1.5rem; color: #333;">Wild Festivals</h1>
             <p style="margin: 3px 0 0 0; color: #666; font-size: 0.85rem;">Tutti gli eventi dedicati al mondo del fumetto, dei giochi e dei cosplay.</p>
         </div>
     </section>
@@ -171,18 +178,19 @@
     </nav>
     <div id="drawer-backdrop" class="backdrop"></div>
 
-    <!-- Contenuto Categoria -->
+    <!-- Contenuto della Categoria: Elenco Interattivo -->
     <main class="home-content" style="padding: 20px;">
-        <section class="upcoming-events-section">
-            <div id="categoria-eventi-container" class="events-list"></div>
+        <section class="category-events-section">
+            <div id="categoria-eventi-container" class="events-list">
+                <!-- Inseriti via JS -->
+            </div>
         </section>
     </main>
 
 </div>
 
+<!-- Script principali con percorsi corretti -->
 <script type="module" src="../js/app.js"></script>
 <script type="module" src="./category.js"></script>
-
-
 </body>
 </html>

@@ -8,7 +8,7 @@ const pathName = window.location.pathname;
 const CATEGORIA_CORRENTE = pathName.includes('comics') ? 'comics' :
                            pathName.includes('folk') ? 'folk' :
                            pathName.includes('food') ? 'food' :
-                           pathName.includes('wild') ? 'wild' : 'comics';
+                           pathName.includes('funny') ? 'funny' : 'comics';
 
 document.addEventListener('DOMContentLoaded', async () => {
     if ('serviceWorker' in navigator) {

@@ -182,7 +182,7 @@ function renderizzaCalendario() {
         'food': '#de0606ba',
         'comics': '#4a67fa',
         'folk': '#2b9348',
-        'wild': '#9b2af1'
+        'funny': '#9b2af1'
     };
     const coloreDefault = '#4361ee';
 
@@ -386,7 +386,7 @@ function apriPopupGiorno(dataStr, eventi) {
         { key: 'food', label: 'Food', icon: 'images/food.webp', cssClass: 'cat-food' },
         { key: 'comics', label: 'Comics', icon: 'images/comics.webp', cssClass: 'cat-comics' },
         { key: 'folk', label: 'Folk', icon: 'images/folk.webp', cssClass: 'cat-folk' },
-        { key: 'wild', label: 'Wild', icon: 'images/wild.webp', cssClass: 'cat-wild' }
+        { key: 'funny', label: 'Wild', icon: 'images/funny.webp', cssClass: 'cat-funny' }
     ];
 
     // Contenitore principale a griglia per le colonne
