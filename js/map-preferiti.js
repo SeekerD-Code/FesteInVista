@@ -14,7 +14,7 @@ function getPngCategoria(categoria) {
     if (cat.includes('folk') || cat.includes('tradizion') || cat.includes('rievocazion') || cat.includes('storica')) {
         return "images/folk.png";
     }
-    return "images/funny.webp";
+    return "images/funny.png";
 }
 
 function formattaDataItaliana(dataStr) {
