@@ -2,21 +2,6 @@ import { fetchEventi } from './data-fetcher.js';
 import { aggiornaContatoreEventi } from './header-component.js';
 import { apriModaleDettagli } from './app.js';
 
-// Funzione di supporto per le immagini PNG in base alla categoria
-function getPngCategoria(categoria) {
-    const cat = (categoria || '').toLowerCase();
-    if (cat.includes('food') || cat.includes('sagra') || cat.includes('gastronomia')) {
-        return "images/food.png";
-    }
-    if (cat.includes('comic') || cat.includes('nerd') || cat.includes('cosplay') || cat.includes('fumetto')) {
-        return "images/comics.png";
-    }
-    if (cat.includes('folk') || cat.includes('tradizion') || cat.includes('rievocazion') || cat.includes('storica')) {
-        return "images/folk.png";
-    }
-    return "images/funny.png";
-}
-
 function formattaDataItaliana(dataStr) {
     if (!dataStr) return '';
     if (typeof dataStr === 'string' && dataStr.includes('T')) {
