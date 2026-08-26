@@ -148,3 +148,4 @@ document.addEventListener('click', (e) => {
         console.error("Errore nel parsing dei dati dell'evento per i dettagli dalla mappa preferiti:", err);
     }
 });
+ 
