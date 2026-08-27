@@ -14,9 +14,10 @@ const map = L.map('map', { zoomControl: false }).setView([41.8719, 12.5674], 6);
 L.control.zoom({ position: 'bottomright' }).addTo(map);
 
 // Tile layer pulito e minimale (mette in risalto i pin e l'Italia)
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; OpenStreetMap contributors'
+L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png?key=cb1_2d1a_1_475267a8bca85d0eca457116', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    subdomains: 'abcd',
+    maxZoom: 20
 }).addTo(map);
 
 // --- AGGIUNGI QUI IL TRACCIAMENTO DEI CONFINI ITALIANI ---
