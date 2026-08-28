@@ -78,6 +78,36 @@
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
     }
 
+    #btn-aggiorna-dati {
+    position: absolute;
+    top: 20px;
+    right: 400px;
+    z-index: 1000;
+    background: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background 0.2s, transform 0.2s;
+}
+
+#btn-aggiorna-dati:hover {
+    background: #f0f0f0;
+    transform: translateY(-1px);
+}
+
+#btn-aggiorna-dati.ruota span,
+#btn-aggiorna-dati.ruota {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 /* ---------------------Splash Screen --------------------------------*/
 /* Correzione del layout centrale per desktop */
     .splash-center-content {

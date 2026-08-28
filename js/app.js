@@ -122,4 +122,45 @@ window.addEventListener('appinstalled', () => {
     hideAllInstallButtons();
     deferredPrompt = null;
 });
- 
+
+async function forzaAggiornamentoDati() {
+    const btn = document.getElementById('btn-aggiorna-dati');
+    try {
+        btn.classList.add('ruota'); // Opzionale: classe CSS per animare l'icona
+        btn.disabled = true;
+
+        console.log("🔄 Aggiornamento manuale in corso...");
+
+        // 1. Pulisci la cache del browser (se usi Cache API) o svuota i dati temporanei degli eventi
+        if ('caches' in window) {
+            const cacheNames = await caches.keys();
+            for (const name of cacheNames) {
+                if (name.includes('dynamic-data') || name.includes('festeinvista-cache')) {
+                    await caches.delete(name);
+                }
+            }
+        }
+
+        // 2. Scarica i dati freschi dal server/foglio
+        const risposta = await fetch('/tuo-endpoint-o-dati.json', { cache: 'no-store' });
+        const nuoviDati = await risposta.json();
+
+        // 3. Aggiorna lo stato o la variabile globale degli eventi dell'app
+        // NOTA: localStorage.getItem('tuoi_preferiti') NON viene toccato qui!
+        eventiGlobali = nuoviDati;
+
+        // 4. Ridisegna la mappa e/o la lista degli eventi
+        aggiornaMappa(eventiGlobali);
+        aggiornaLista(eventiGlobali);
+
+        console.log("✅ Dati aggiornati con successo!");
+        alert("Eventi aggiornati all'ultima versione!");
+
+    } catch (error) {
+        console.error("❌ Errore durante l'aggiornamento:", error);
+        alert("Impossibile aggiornare. Controlla la connessione.");
+    } finally {
+        btn.classList.remove('ruota');
+        btn.disabled = false;
+    }
+}
