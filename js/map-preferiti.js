@@ -29,6 +29,7 @@ function formattaDataItaliana(dataStr) {
     if (dataStr.includes('/')) return dataStr;
     return dataStr;
 }
+
 let map;
 let markerLayerGroup;
 
@@ -56,7 +57,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 // 3. Funzione per caricare i marker solo dei preferiti
 async function caricaMarkerPreferiti() {
     const eventi = await fetchEventi();
-    const preferitiIds = JSON.parse(localStorage.getItem('festmap_preferiti') || '[]');
+    const preferitiIds = JSON.parse(localStorage.getItem('festeinvista_preferiti') || '[]');
 
     const eventiPreferiti = eventi.filter(evento => {
         const eventoId = evento.id || evento.nome_rilevato;
