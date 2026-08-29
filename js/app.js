@@ -126,39 +126,42 @@ window.addEventListener('appinstalled', () => {
 async function forzaAggiornamentoDati() {
     const btn = document.getElementById('btn-aggiorna-dati');
     try {
-        btn.classList.add('ruota'); // Opzionale: classe CSS per animare l'icona
+        btn.classList.add('ruota');
         btn.disabled = true;
 
-        console.log("🔄 Aggiornamento manuale in corso...");
+        console.log("🔄 Controllo aggiornamenti grafici e dati in corso...");
 
-        // 1. Pulisci la cache del browser (se usi Cache API) o svuota i dati temporanei degli eventi
+        // 1. Svuota tutte le cache salvate dal browser per questa app
         if ('caches' in window) {
             const cacheNames = await caches.keys();
             for (const name of cacheNames) {
-                if (name.includes('dynamic-data') || name.includes('festeinvista-cache')) {
-                    await caches.delete(name);
-                }
+                await caches.delete(name);
+                console.log(`🗑️ Eliminata cache obsoleta: ${name}`);
             }
         }
 
-        // 2. Scarica i dati freschi dal server/foglio
-        const risposta = await fetch('/tuo-endpoint-o-dati.json', { cache: 'no-store' });
-        const nuoviDati = await risposta.json();
+        // 2. Rimuovi i Service Worker registrati per evitare che ricarichino file vecchi
+        if ('serviceWorker' in navigator) {
+            const registrations = await navigator.serviceWorker.getRegistrations();
+            for (let registration of registrations) {
+                await registration.unregister();
+                console.log("🔌 Service Worker disinstallato per forzare l'aggiornamento.");
+            }
+        }
 
-        // 3. Aggiorna lo stato o la variabile globale degli eventi dell'app
-        // NOTA: localStorage.getItem('tuoi_preferiti') NON viene toccato qui!
-        eventiGlobali = nuoviDati;
-
-        // 4. Ridisegna la mappa e/o la lista degli eventi
-        aggiornaMappa(eventiGlobali);
-        aggiornaLista(eventiGlobali);
-
-        console.log("✅ Dati aggiornati con successo!");
-        alert("Eventi aggiornati all'ultima versione!");
+        // 3. Breve pausa visiva per l'animazione, poi ricarica la pagina da zero
+        setTimeout(() => {
+            // Utilizzando true forziamo il reload bypassando la cache del browser
+            window.location.reload(true);
+        }, 800);
 
     } catch (error) {
-        console.error("❌ Errore durante l'aggiornamento:", error);
-        alert("Impossibile aggiornare. Controlla la connessione.");
+        console.error("❌ Errore durante l'aggiornamento grafico:", error);
+        alert("Impossibile aggiornare la grafica. Controlla la connessione.");
+        btn.classList.remove('ruota');
+        btn.disabled = false;
+    }
+}
     } finally {
         btn.classList.remove('ruota');
         btn.disabled = false;
