@@ -61,9 +61,9 @@
     z-index: 1000;
     background: #ffffff;
     border: none;
-    border-radius: 50%;
-    width: 45px;
-    height: 30px;
+    border-radius: 30%;
+    width: 50px;
+    height: 35px;
     display: flex;
     align-items: center;
     justify-content: center;
