@@ -13,7 +13,6 @@ let markerLayerGroup = L.markerClusterGroup({
 const map = L.map('map', { zoomControl: false }).setView([41.8719, 12.5674], 6);
 L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-// Tile layer pulito e minimale (mette in risalto i pin e l'Italia)
 L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png?key=cb1_2d1a_1_475267a8bca85d0eca457116', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
     subdomains: 'abcd',
@@ -359,6 +358,18 @@ function mostraMarkerFiltrati(eventi) {
             dateHtml = `<div style="font-size: 0.85rem; color: #333; margin-top: 2px;">📅 <b>${inizio === fine ? inizio : `Dal ${inizio} al ${fine}`}</b></div>`;
         }
 
+            // Recupera i preferiti correnti per verificare lo stato del cuore
+            const preferiti = JSON.parse(localStorage.getItem('festeinvista_preferiti') || '[]');
+            const eventoId = primoEvento.id || primoEvento.nome_rilevato;
+            const isPreferito = preferiti.includes(eventoId);
+            const cuoreClass = isPreferito ? 'preferito-attivo' : '';
+
+            const webpCuore = `
+                <svg class="cuore-icon" viewBox="0 0 24 24" width="20" height="20">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+            `;
+
         const popupContent = `
             <div style="text-align: center; min-width: 180px;">
                 <b style="font-size: 1rem; color: #2c3e50;">${primoEvento.nome_rilevato || primoEvento.nome}</b><br>
@@ -370,9 +381,15 @@ function mostraMarkerFiltrati(eventi) {
                     <a href="${urlItinerario}" target="_blank" style="padding: 5px 10px; background: #007bff; color: white; border-radius: 4px; text-decoration: none; font-size: 0.85rem;">
                         🚗 Itinerario
                     </a>
+
                     <button type="button" class="btn-apri-dettaglio" data-evento-b64='${btoa(encodeURIComponent(JSON.stringify(primoEvento)))}' style="padding: 5px 10px; background: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: bold;">
                         🔍 Dettagli
                     </button>
+
+                    <button class="btn-preferito-overlay ${cuoreClass}" data-id="${eventoId}" title="Aggiungi ai preferiti" style="position: relative; top: auto; right: auto;">
+                        ${webpCuore}
+                    </button>
+
                 </div>
             </div>
         `;
@@ -390,6 +407,7 @@ function mostraMarkerFiltrati(eventi) {
 
 // --- GESTIONE CLICK SPECIFICA DELLA MAPPA (Dettagli) ---
 document.addEventListener('click', (event) => {
+    // 1. Gestione Click Dettagli
     const btnDettaglio = event.target.closest('.btn-apri-dettaglio');
     if (btnDettaglio) {
         const eventoB64 = btnDettaglio.getAttribute('data-evento-b64');
@@ -400,6 +418,30 @@ document.addEventListener('click', (event) => {
         } catch (err) {
             console.error("Errore nel parsing dei dati evento:", err);
         }
+    }
+// 2. Gestione Click Preferito (Cuoricino)
+    const btnPreferito = event.target.closest('.btn-preferito-overlay');
+    if (btnPreferito) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const eventoId = btnPreferito.getAttribute('data-id');
+        if (!eventoId) return;
+
+        let preferiti = JSON.parse(localStorage.getItem('festeinvista_preferiti') || '[]');
+
+        if (preferiti.includes(eventoId)) {
+            // Rimuovi dai preferiti
+            preferiti = preferiti.filter(id => id !== eventoId);
+            btnPreferito.classList.remove('preferito-attivo');
+        } else {
+            // Aggiungi ai preferiti
+            preferiti.push(eventoId);
+            btnPreferito.classList.add('preferito-attivo');
+        }
+
+        // Salva lo stato aggiornato in localStorage
+        localStorage.setItem('festeinvista_preferiti', JSON.stringify(preferiti));
     }
 });
 
@@ -514,7 +556,6 @@ document.addEventListener('click', (e) => {
         currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1);
         initCustomCalendar();
     }
-    
     if (e.target.id === 'clear-dates-btn') {
         e.preventDefault();
         e.stopPropagation();

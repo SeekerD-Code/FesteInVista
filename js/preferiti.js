@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     })) : [];
 
     // Filtra subito solo quelli salvati nei preferiti dell'utente
-    const preferitiIds = JSON.parse(localStorage.getItem('festmap_preferiti') || '[]');
+    const preferitiIds = JSON.parse(localStorage.getItem('festeinvista_preferiti') || '[]');
     const eventiPreferitiBase = eventiTotali.filter(e => {
         const evId = e.id || e.nome_rilevato;
         return preferitiIds.includes(evId);
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function eseguiFiltroERender() {
         // Ripartiamo sempre dai preferiti salvati per applicare i filtri di ricerca e form
-        const currentPreferitiIds = JSON.parse(localStorage.getItem('festmap_preferiti') || '[]');
+        const currentPreferitiIds = JSON.parse(localStorage.getItem('festeinvista_preferiti') || '[]');
         const mieiPreferiti = eventiTotali.filter(e => currentPreferitiIds.includes(e.id || e.nome_rilevato));
 
         const filtrati = filtraEventi(mieiPreferiti);
@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (btnPreferito) {
             const idEvento = btnPreferito.getAttribute('data-id');
             if (idEvento) {
-                let preferiti = JSON.parse(localStorage.getItem('festmap_preferiti') || '[]');
+                let preferiti = JSON.parse(localStorage.getItem('festeinvista_preferiti') || '[]');
 
                 if (preferiti.includes(idEvento)) {
                     preferiti = preferiti.filter(id => id !== idEvento);
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     btnPreferito.setAttribute('title', 'Rimuovi dai preferiti');
                 }
 
-                localStorage.setItem('festmap_preferiti', JSON.stringify(preferiti));
+                localStorage.setItem('festeinvista_preferiti', JSON.stringify(preferiti));
                 eseguiFiltroERender();
             }
             return;

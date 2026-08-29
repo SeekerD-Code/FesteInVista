@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             counterSpan.textContent = validi.length;
         }
 
-        const preferitiIds = JSON.parse(localStorage.getItem('festmap_preferiti') || '[]');
+        const preferitiIds = JSON.parse(localStorage.getItem('festeinvista_preferiti') || '[]');
         const eventiPreferiti = validi.filter(e => preferitiIds.includes(e.id || e.nome_rilevato));
 
         if (containerPrimi) {
@@ -226,8 +226,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (eventiTotali && eventiTotali.length > 0) {
         renderizzaEventi(eventiTotali);
     }
-    window.festmapDatiPronti = true;
-    window.dispatchEvent(new Event('festmap-pronta'));
+    window.festeinvistaDatiPronti = true;
+    window.dispatchEvent(new Event('festeinvista-pronta'));
 
     const searchInput = document.getElementById('search-input');
     const sortSelect = document.getElementById('sort-order-select');
@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (btnPreferito) {
             const idEvento = btnPreferito.getAttribute('data-id');
             if (idEvento) {
-                let preferiti = JSON.parse(localStorage.getItem('festmap_preferiti') || '[]');
+                let preferiti = JSON.parse(localStorage.getItem('festeinvista_preferiti') || '[]');
                 if (preferiti.includes(idEvento)) {
                     preferiti = preferiti.filter(id => id !== idEvento);
                     btnPreferito.classList.remove('preferito-attivo');
@@ -285,7 +285,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     preferiti.push(idEvento);
                     btnPreferito.classList.add('preferito-attivo');
                 }
-                localStorage.setItem('festmap_preferiti', JSON.stringify(preferiti));
+                localStorage.setItem('festeinvista_preferiti', JSON.stringify(preferiti));
                 eseguiFiltroERender();
             }
             return;

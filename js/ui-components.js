@@ -17,7 +17,7 @@ export function creaCardEvento(evento, isPassato = false) {
     const classePassato = isPassato ? 'evento-passato' : '';
     const etichettaPassato = isPassato ? '<span class="badge-passato">Evento Passato</span>' : '';
 
-    const preferiti = JSON.parse(localStorage.getItem('festmap_preferiti') || '[]');
+    const preferiti = JSON.parse(localStorage.getItem('festeinvista_preferiti') || '[]');
     const eventoId = evento.id || evento.nome_rilevato;
     const isPreferito = preferiti.includes(eventoId);
 
@@ -32,7 +32,6 @@ export function creaCardEvento(evento, isPassato = false) {
         iconaCategoriaSrc = 'images/folk.webp';
     } else if (categoriaEvento.includes('comic') || categoriaEvento.includes('cosplay') || categoriaEvento.includes('fumetto')) {
         iconaCategoriaSrc = 'images/comics.webp';
-        
     } else if (categoriaEvento.includes('funny') || categoriaEvento.includes('natura')) {
         iconaCategoriaSrc = 'images/funny.webp';
     } else if (categoriaEvento.includes('food') || categoriaEvento.includes('sagra') || categoriaEvento.includes('cibo')) {

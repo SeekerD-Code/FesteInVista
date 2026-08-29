@@ -26,7 +26,7 @@ window.addEventListener('load', () => {
     // Usiamo localStorage così lo splash compare UNA sola volta in assoluto (o finché non pulisce i dati)
     // Se preferisci che appaia solo alla prima apertura in assoluto, tieni localStorage.
     // Se vuoi che non appaia più quando clicchi Home, localStorage risolve il problema.
-    if (localStorage.getItem('festmap_splash_visto')) {
+    if (localStorage.getItem('festeinvista_splash_visto')) {
         if (splash) {
             splash.style.display = 'none';
             splash.remove();
@@ -34,7 +34,7 @@ window.addEventListener('load', () => {
         return;
     }
 
-    localStorage.setItem('festmap_splash_visto', 'true');
+    localStorage.setItem('festeinvista_splash_visto', 'true');
 
     let datiPronti = false;
     let animazioneMinimaCompletata = false;
@@ -49,7 +49,7 @@ window.addEventListener('load', () => {
     };
 
     // 1. Ascoltiamo quando i dati sono effettivamente pronti da app.js
-    window.addEventListener('festmap-pronta', () => {
+    window.addEventListener('festeinvista-pronta', () => {
         datiPronti = true;
         chiudiSplashSePronto();
     });

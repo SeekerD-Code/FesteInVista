@@ -7,7 +7,7 @@ document.addEventListener('click', (e) => {
     if (!eventoId) return;
 
     // Recupera i preferiti attuali dal localStorage
-    let preferiti = JSON.parse(localStorage.getItem('festmap_preferiti') || '[]');
+    let preferiti = JSON.parse(localStorage.getItem('festeinvista_preferiti') || '[]');
 
     const index = preferiti.indexOf(eventoId);
 
@@ -24,7 +24,7 @@ document.addEventListener('click', (e) => {
     }
 
     // Salva la nuova lista nel localStorage
-    localStorage.setItem('festmap_preferiti', JSON.stringify(preferiti));
+    localStorage.setItem('festeinvista_preferiti', JSON.stringify(preferiti));
 
     // Se ci troviamo nella pagina dei preferiti, aggiorna la lista in tempo reale!
     if (window.location.pathname.includes('preferiti.html')) {
