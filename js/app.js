@@ -162,8 +162,3 @@ async function forzaAggiornamentoDati() {
         btn.disabled = false;
     }
 }
-    } finally {
-        btn.classList.remove('ruota');
-        btn.disabled = false;
-    }
-}
