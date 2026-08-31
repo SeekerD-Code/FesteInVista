@@ -98,14 +98,14 @@
     transform: translateY(-1px);
 }
 
-#btn-aggiorna-dati.ruota span,
 #btn-aggiorna-dati.ruota {
-    animation: spin 1s linear infinite;
+    animation: blinkFade 0.8s ease-in-out infinite;
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+@keyframes blinkFade {
+    0% { opacity: 1; }
+    50% { opacity: 0.4; } /* Diventa semitrasparente a metà ciclo */
+    100% { opacity: 1; }
 }
 
 /* ---------------------Splash Screen --------------------------------*/
