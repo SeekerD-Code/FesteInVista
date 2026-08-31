@@ -26,7 +26,7 @@ fetch('/italy_regions.geojson')
         L.geoJSON(data, {
             style: {
                 color: '#4A148C',      // Colore del bordo (usa il tuo viola tematico)
-                weight: 2,             // Spessore del bordo
+                weight: 2,              // Spessore del bordo
                 opacity: 0.8,
                 fillColor: '#000000',
                 fillOpacity: 0.02      // Un velo leggerissimo all'interno
@@ -340,7 +340,6 @@ function mostraMarkerFiltrati(eventi) {
             iconAnchor: [anchor, anchor],
             popupAnchor: [0, -anchor]
         });
-        // --------------------
 
         const urlItinerario = `https://www.google.com/maps/dir/?api=1&destination=${primoEvento.latitudineParsed},${primoEvento.longitudineParsed}&travelmode=driving`;
 
@@ -358,18 +357,6 @@ function mostraMarkerFiltrati(eventi) {
             dateHtml = `<div style="font-size: 0.85rem; color: #333; margin-top: 2px;">📅 <b>${inizio === fine ? inizio : `Dal ${inizio} al ${fine}`}</b></div>`;
         }
 
-            // Recupera i preferiti correnti per verificare lo stato del cuore
-            const preferiti = JSON.parse(localStorage.getItem('festeinvista_preferiti') || '[]');
-            const eventoId = primoEvento.id || primoEvento.nome_rilevato;
-            const isPreferito = preferiti.includes(eventoId);
-            const cuoreClass = isPreferito ? 'preferito-attivo' : '';
-
-            const webpCuore = `
-                <svg class="cuore-icon" viewBox="0 0 24 24" width="20" height="20">
-                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                </svg>
-            `;
-
         const popupContent = `
             <div style="text-align: center; min-width: 180px;">
                 <b style="font-size: 1rem; color: #2c3e50;">${primoEvento.nome_rilevato || primoEvento.nome}</b><br>
@@ -377,19 +364,14 @@ function mostraMarkerFiltrati(eventi) {
                 <div style="margin: 8px 0; text-align: left; background: #f8f9fa; padding: 6px; border-radius: 4px;">
                     ${dateHtml}
                 </div>
-                <div style="display: flex; gap: 6px; justify-content: center; margin-top: 5px; flex-wrap: wrap;">
-                    <a href="${urlItinerario}" target="_blank" style="padding: 5px 10px; background: #007bff; color: white; border-radius: 4px; text-decoration: none; font-size: 0.85rem;">
+                <div style="display: flex; gap: 8px; justify-content: center; align-items: center; margin-top: 5px;">
+                    <a href="${urlItinerario}" target="_blank" style="padding: 6px 12px; background: #007bff; color: white; border-radius: 4px; text-decoration: none; font-size: 0.85rem; font-weight: 500;">
                         🚗 Itinerario
                     </a>
 
-                    <button type="button" class="btn-apri-dettaglio" data-evento-b64='${btoa(encodeURIComponent(JSON.stringify(primoEvento)))}' style="padding: 5px 10px; background: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: bold;">
+                    <button type="button" class="btn-apri-dettaglio" data-evento-b64='${btoa(encodeURIComponent(JSON.stringify(primoEvento)))}' style="padding: 6px 12px; background: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: bold;">
                         🔍 Dettagli
                     </button>
-
-                    <button class="btn-preferito-overlay ${cuoreClass}" data-id="${eventoId}" title="Aggiungi ai preferiti" style="position: relative; top: auto; right: auto;">
-                        ${webpCuore}
-                    </button>
-
                 </div>
             </div>
         `;
@@ -407,7 +389,7 @@ function mostraMarkerFiltrati(eventi) {
 
 // --- GESTIONE CLICK SPECIFICA DELLA MAPPA (Dettagli) ---
 document.addEventListener('click', (event) => {
-    // 1. Gestione Click Dettagli
+    // Gestione Click Dettagli
     const btnDettaglio = event.target.closest('.btn-apri-dettaglio');
     if (btnDettaglio) {
         const eventoB64 = btnDettaglio.getAttribute('data-evento-b64');
@@ -418,30 +400,6 @@ document.addEventListener('click', (event) => {
         } catch (err) {
             console.error("Errore nel parsing dei dati evento:", err);
         }
-    }
-// 2. Gestione Click Preferito (Cuoricino)
-    const btnPreferito = event.target.closest('.btn-preferito-overlay');
-    if (btnPreferito) {
-        event.preventDefault();
-        event.stopPropagation();
-
-        const eventoId = btnPreferito.getAttribute('data-id');
-        if (!eventoId) return;
-
-        let preferiti = JSON.parse(localStorage.getItem('festeinvista_preferiti') || '[]');
-
-        if (preferiti.includes(eventoId)) {
-            // Rimuovi dai preferiti
-            preferiti = preferiti.filter(id => id !== eventoId);
-            btnPreferito.classList.remove('preferito-attivo');
-        } else {
-            // Aggiungi ai preferiti
-            preferiti.push(eventoId);
-            btnPreferito.classList.add('preferito-attivo');
-        }
-
-        // Salva lo stato aggiornato in localStorage
-        localStorage.setItem('festeinvista_preferiti', JSON.stringify(preferiti));
     }
 });
 
@@ -471,7 +429,6 @@ function initCustomCalendar() {
     // Primo giorno del mese e totale giorni
     const firstDayIndex = (new Date(year, month, 1).getDay() + 6) % 7; // Lunedì = 0
     const totalDays = new Date(year, month + 1, 0).getDate();
-    const oggiStr = new Date().toISOString().split('T')[0];
 
     // Spazi vuoti per i giorni del mese precedente
     for (let i = 0; i < firstDayIndex; i++) {
