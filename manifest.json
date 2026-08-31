@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "name": "FesteInVista Italia",
   "short_name": "FesteInVista",
@@ -34,4 +35,42 @@
       "label": "FesteInVista su Desktop"
     }
   ]
+=======
+{
+  "name": "FesteInVista Italia",
+  "short_name": "FesteInVista",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4A148C",
+  "icons": [
+    {
+      "src": "/icons/icon-192-FV.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-256-FV.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/images/screenshot-mobile.png",
+      "sizes": "479x790",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "FesteInVista su Smartphone"
+    },
+    {
+      "src": "/images/screenshot-wide.png",
+      "sizes": "1915x890",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "FesteInVista su Desktop"
+    }
+  ]
+>>>>>>> 8bbd9702ae28e15a16ac13826b8e677621eafe79
 }

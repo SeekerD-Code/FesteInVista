@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // 1. Funzione per mostrare i pin in sequenza a cascata con effetto CSS
 function caricaAnimazioniInSequenza(classe, ritardoMs = 250) {
   const elementi = document.querySelectorAll(classe);
@@ -94,4 +95,102 @@ window.addEventListener('load', () => {
     setTimeout(() => {
         if (splash) splash.remove();
     }, 25000);
+=======
+// 1. Funzione per mostrare i pin in sequenza a cascata con effetto CSS
+function caricaAnimazioniInSequenza(classe, ritardoMs = 250) {
+  const elementi = document.querySelectorAll(classe);
+
+  elementi.forEach((elemento, indice) => {
+    setTimeout(() => {
+      // Rende visibile il pin con un effetto a comparsa CSS
+      elemento.classList.add("pin-visibile");
+    }, indice * ritardoMs);
+  });
+}
+
+// 2. Definizione della sequenza temporizzata delle fasi
+const fasiCaricamento = [
+    { time: 0,    text: "Ricerca eventi in Italia...", png: null },
+    { time: 2500, text: "Trovati eventi food...", png: "images/food.png", classeAnim: ".anim-food" },
+    { time: 5000, text: "Trovati eventi Comics...", png: "images/comics.png", classeAnim: ".anim-comics" },
+    { time: 7500, text: "Trovati eventi Folk...", png: "images/folk.png", classeAnim: ".anim-folk" },
+    { time: 10000, text: "Trovati eventi Wild...", png: "images/funny.png", classeAnim: ".anim-funny" }
+];
+
+// 3. Avvio della sequenza all'evento di caricamento della pagina
+window.addEventListener('load', () => {
+    const splash = document.getElementById('splash-screen');
+
+    // Usiamo localStorage così lo splash compare UNA sola volta in assoluto (o finché non pulisce i dati)
+    // Se preferisci che appaia solo alla prima apertura in assoluto, tieni localStorage.
+    // Se vuoi che non appaia più quando clicchi Home, localStorage risolve il problema.
+    if (localStorage.getItem('festeinvista_splash_visto')) {
+        if (splash) {
+            splash.style.display = 'none';
+            splash.remove();
+        }
+        return;
+    }
+
+    localStorage.setItem('festeinvista_splash_visto', 'true');
+
+    let datiPronti = false;
+    let animazioneMinimaCompletata = false;
+
+    const chiudiSplashSePronto = () => {
+        if (datiPronti && animazioneMinimaCompletata) {
+            if (splash && !splash.classList.contains('splash-hidden')) {
+                splash.classList.add('splash-hidden');
+                setTimeout(() => splash.remove(), 800);
+            }
+        }
+    };
+
+    // 1. Ascoltiamo quando i dati sono effettivamente pronti da app.js
+    window.addEventListener('festeinvista-pronta', () => {
+        datiPronti = true;
+        chiudiSplashSePronto();
+    });
+
+    // 2. Facciamo partire la sequenza visiva delle fasi
+    const statusText = document.getElementById("loader-status-text");
+    const loaderIconContainer = document.getElementById("loader-icon-container");
+
+    fasiCaricamento.forEach(fase => {
+        setTimeout(() => {
+            if (statusText) {
+                statusText.style.opacity = 0;
+                setTimeout(() => {
+                    statusText.textContent = fase.text;
+                    statusText.style.opacity = 1;
+                }, 200);
+            }
+
+            if (loaderIconContainer) {
+                loaderIconContainer.innerHTML = "";
+                loaderIconContainer.className = "";
+
+                if (fase.png) {
+                    loaderIconContainer.innerHTML = `<img src="${fase.png}" class="png-loader-icon" alt="icon">`;
+                }
+            }
+
+            if (fase.classeAnim) {
+                caricaAnimazioniInSequenza(fase.classeAnim, 250);
+            }
+
+        }, fase.time);
+    });
+
+    // 3. Tempo minimo garantito per l'animazione grafica
+    setTimeout(() => {
+        animazioneMinimaCompletata = true;
+        chiudiSplashSePronto();
+    }, 10000);
+
+    // 4. Timeout di emergenza
+    setTimeout(() => {
+        if (splash) splash.remove();
+    }, 25000);
+>>>>>>> 8bbd9702ae28e15a16ac13826b8e677621eafe79
 });

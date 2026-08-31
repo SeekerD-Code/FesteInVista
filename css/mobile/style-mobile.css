@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* --- Stili Generici Mobile (App Globale) --- */
 @media screen and (max-width: 767px) {
     body {
@@ -91,3 +92,98 @@
         display: none !important;
     }
 }
+=======
+/* --- Stili Generici Mobile (App Globale) --- */
+@media screen and (max-width: 767px) {
+    body {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        max-width: 100% !important;
+        background-size: cover;
+        padding-bottom: 70px;
+    }
+
+    .main-app-container {
+        max-width: 100% !important;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+
+    /* --- Quadratino Fluttuante PWA (Smartphone) --- */
+    .pwa-mobile-float-btn {
+        position: fixed !important;
+        top: 35px !important;
+        right: 5px !important;
+        background: #4A148C;
+        color: white;
+        border: none;
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+        box-shadow: 0 4px 12px rgba(74, 20, 140, 0.4);
+        cursor: pointer;
+        z-index: 1999;
+        transition: transform 0.2s, background 0.2s;
+    }
+
+    .pwa-mobile-float-btn .float-icon {
+        font-size: 1.2rem;
+        line-height: 1;
+    }
+
+    .pwa-mobile-float-btn .float-text {
+        font-size: 0.55rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+    }
+
+    .pwa-mobile-float-btn:active {
+        transform: scale(0.92);
+        background: #6a1bb2;
+    }
+
+     #btn-aggiorna-dati {
+    bottom: 22px;
+    right: 1px;
+    z-index: 1000;
+    background: #ffffff;
+    border: none;
+    border-radius: 30%;
+    width: 50px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+}
+
+#btn-aggiorna-dati:active {
+    transform: scale(0.92);
+}
+
+#btn-aggiorna-dati.ruota {
+    animation: blinkFade 0.8s ease-in-out infinite;
+}
+
+@keyframes blinkFade {
+    0% { opacity: 1; }
+    50% { opacity: 0.4; } /* Diventa semitrasparente a metà ciclo */
+    100% { opacity: 1; }
+}
+
+/* Nascondi il pulsante desktop su schermi mobile */
+    #pwa-install-pc-btn {
+        display: none !important;
+    }
+}
+>>>>>>> 8bbd9702ae28e15a16ac13826b8e677621eafe79
