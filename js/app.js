@@ -123,7 +123,7 @@ window.addEventListener('appinstalled', () => {
     deferredPrompt = null;
 });
 
-async function forzaAggiornamentoDati() {
+window.forzaAggiornamentoDati = async function forzaAggiornamentoDati() {
     const btn = document.getElementById('btn-aggiorna-dati');
     try {
         btn.classList.add('ruota');
