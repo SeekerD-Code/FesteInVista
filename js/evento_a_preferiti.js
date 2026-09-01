@@ -101,8 +101,9 @@ export function creaPulsanteCondividi(ev) {
     btn.innerHTML = '<span>🔗</span> <span>Condividi Evento</span>';
 
     btn.addEventListener('click', async () => {
-        const titolo = ev.nome_rilevato || ev.nome || ev.titolo || 'Evento su FesteInVista';
-        const testo = `Scopri l'evento "${titolo}" su FesteInVista!`;
+        const titolo = ev.nome_rilevato || ev.nome || ev.titolo || 'Evento';
+        const luogo = ev.citta || ev.luogo ? `📍 ${ev.citta || ev.luogo}\n` : '';
+        const testo = `🎉 *${titolo}*\n${luogo}Guarda i dettagli dell'evento su FesteInVista:`;
 
         const idOriginale = ev.id || ev.nome_rilevato || ev.nome || ev.titolo || '';
         const urlBase = `${window.location.origin}/dati-evento.html`;
@@ -110,14 +111,19 @@ export function creaPulsanteCondividi(ev) {
 
         if (navigator.share) {
             try {
-                await navigator.share({ title: titolo, text: testo, url: urlCondivisione });
+                await navigator.share({
+                    title: titolo,
+                    text: testo,
+                    url: urlCondivisione
+                });
             } catch (err) {
                 console.log('Condivisione annullata:', err);
             }
         } else {
             try {
-                await navigator.clipboard.writeText(urlCondivisione);
-                alert('Link dell\'evento copiato negli appunti!');
+                const testoCompletoDaCopiare = `${testo}\n${urlCondivisione}`;
+                await navigator.clipboard.writeText(testoCompletoDaCopiare);
+                alert('Link e dettagli dell\'evento copiati negli appunti!');
             } catch (err) {
                 alert('Copia il link manualmente: ' + urlCondivisione);
             }
