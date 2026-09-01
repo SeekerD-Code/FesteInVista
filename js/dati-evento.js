@@ -97,8 +97,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         const luogoEl = document.getElementById('det-luogo');
         const testoLuogo = ev.luogo || 'Luogo non specificato';
 
+        // NUOVO CODICE (Apri itinerario su Google Maps)
         if (ev.latitudine && ev.longitudine && ev.latitudine !== 0 && ev.longitudine !== 0) {
-            luogoEl.innerHTML = `<a href="./index.html?lat=${ev.latitudine}&lng=${ev.longitudine}" style="color: #007bff; text-decoration: underline;" title="Visualizza sulla mappa">${testoLuogo} 📍</a>`;
+            const urlGoogleMaps = `https://www.google.com/maps/dir/?api=1&destination=${ev.latitudine},${ev.longitudine}`;
+            luogoEl.innerHTML = `<a href="${urlGoogleMaps}" target="_blank" rel="noopener noreferrer" style="color: #007bff; text-decoration: underline;" title="Calcola itinerario su Google Maps">${testoLuogo} 📍</a>`;
+        } else if (testoLuogo && testoLuogo !== 'Luogo non specificato') {
+            // Fallback: se non ci sono coordinate lat/lng ma c'è un testo del luogo, cerca il luogo per nome su Google Maps
+            const urlRicercaMaps = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(testoLuogo)}`;
+            luogoEl.innerHTML = `<a href="${urlRicercaMaps}" target="_blank" rel="noopener noreferrer" style="color: #007bff; text-decoration: underline;" title="Calcola itinerario su Google Maps">${testoLuogo} 📍</a>`;
         } else {
             luogoEl.textContent = testoLuogo;
         }
