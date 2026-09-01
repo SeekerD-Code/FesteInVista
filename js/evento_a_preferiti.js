@@ -129,7 +129,14 @@ export function creaPulsanteCondividi(ev) {
 
 export function renderAzioniEvento(containerId, ev) {
     const container = typeof containerId === 'string' ? document.getElementById(containerId) : containerId;
-    if (!container) return;
+    if (!container || !ev) return;
+
+    // Salva automaticamente l'evento in localStorage appena vengono renderizzate le azioni
+    try {
+        localStorage.setItem('eventoSelezionatoDettaglio', JSON.stringify(ev));
+    } catch (e) {
+        console.error("Errore salvataggio evento in localStorage:", e);
+    }
 
     container.innerHTML = '';
     container.appendChild(creaPulsantePreferito(ev));
