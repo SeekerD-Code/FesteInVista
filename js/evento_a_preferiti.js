@@ -101,33 +101,30 @@ export function creaPulsanteCondividi(ev) {
     btn.addEventListener('click', async () => {
         const titolo = ev.nome_rilevato || ev.nome || ev.titolo || 'Evento';
         const luogo = ev.citta || ev.luogo ? `📍 ${ev.citta || ev.luogo}\n` : '';
-        const messaggioTesto = `🎉 *${titolo}*\n${luogo}Guarda i dettagli dell'evento su FesteInVista:`;
 
         const idOriginale = ev.id || ev.nome_rilevato || ev.nome || ev.titolo || '';
         const urlBase = `${window.location.origin}/dati-evento.html`;
         const urlCondivisione = `${urlBase}?evento=${encodeURIComponent(idOriginale)}`;
 
-        const testoCompleto = `${messaggioTesto}\n${urlCondivisione}`;
+        // Uniamo il testo formattato e l'URL in una singola stringa
+        const messaggioCompleto = `🎉 *${titolo}*\n${luogo}Guarda i dettagli dell'evento su FesteInVista:\n${urlCondivisione}`;
 
         if (navigator.share) {
             try {
-                // Su smartphone passa il messaggio formattato
+                // Passiamo SOLO 'text' per evitare che l'OS/WhatsApp scarti il messaggio
                 await navigator.share({
                     title: titolo,
-                    text: messaggioTesto,
-                    url: urlCondivisione
+                    text: messaggioCompleto
                 });
             } catch (err) {
                 console.log('Condivisione annullata:', err);
             }
         } else {
             try {
-                // Su PC/Browser desktop copia l'intero blocco (Testo + Link) negli appunti
-                await navigator.clipboard.writeText(testoCompleto);
+                await navigator.clipboard.writeText(messaggioCompleto);
                 alert('Dettagli e link dell\'evento copiati nei tuoi appunti!\nOra puoi incollarli su WhatsApp.');
             } catch (err) {
-                // Fallback manuale in caso di permessi bloccati
-                window.prompt('Copia il testo e il link per condividere:', testoCompleto);
+                window.prompt('Copia il testo e il link per condividere:', messaggioCompleto);
             }
         }
     });
