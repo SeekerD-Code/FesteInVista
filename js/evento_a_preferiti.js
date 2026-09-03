@@ -106,28 +106,24 @@ export function creaPulsanteCondividi(ev) {
         const urlBase = `${window.location.origin}/dati-evento.html`;
         const urlCondivisione = `${urlBase}?evento=${encodeURIComponent(idOriginale)}`;
 
-        // Rileva se l'utente è su un dispositivo mobile
-        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        // Nome e luogo compaiono direttamente nel testo inviato/copiato
+        const messaggioCompleto = `🎉 *${titolo}*\n${luogo}Guarda i dettagli dell'evento su FesteInVista:\n${urlCondivisione}`;
 
-        // SU MOBILE (se c'è navigator.share)
-        if (isMobile && navigator.share) {
-            const messaggioCompleto = `🎉 *${titolo}*\n${luogo}Guarda i dettagli dell'evento su FesteInVista:\n${urlCondivisione}`;
+        if (navigator.share) {
             try {
                 await navigator.share({
                     title: titolo,
                     text: messaggioCompleto
                 });
             } catch (err) {
-                console.log('Condivisione annullata:', err);
+                console.log('Condivisione annullata');
             }
         } else {
-            // SU PC / DESKTOP (o browser senza share): Copia ESCLUSIVAMENTE il link negli appunti
             try {
-                await navigator.clipboard.writeText(urlCondivisione);
-                alert('Link dell\'evento copiato negli appunti!');
+                await navigator.clipboard.writeText(messaggioCompleto);
+                alert('Dettagli e link dell\'evento copiati negli appunti!');
             } catch (err) {
-                // Fallback nel caso in cui i permessi appunti siano bloccati
-                window.prompt('Copia il link dell\'evento:', urlCondivisione);
+                window.prompt('Copia il messaggio:', messaggioCompleto);
             }
         }
     });
