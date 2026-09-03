@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         if (ev.descrizione) {
-            document.getElementById('det-descrizione').textContent = ev.descrizione;
+            document.getElementById('det-descrizione').innerHTML = ev.descrizione;
         }
 
         // INTEGRATORE AZIONI (Preferiti & Condividi)
