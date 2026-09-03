@@ -18,8 +18,7 @@ export function pulisciIdEvento(ev) {
 
     return String(rawId)
         .replace(/["']/g, '')
-        .trim()
-        .toLowerCase();
+        .trim();
 }
 
 /**
@@ -33,17 +32,17 @@ export function recuperaEventoDaUrl(listaEventi) {
 
     if (!rawIdUrl) return null;
 
-    const targetId = pulisciIdEvento(rawIdUrl);
+    const targetIdClean = pulisciIdEvento(rawIdUrl).toLowerCase();
 
-    // Cerchiamo l'evento confrontando l'ID pulito
+    // Cerchiamo l'evento confrontando l'ID pulito (in minuscolo per la ricerca flessibile da URL)
     return listaEventi.find(e => {
-        const idBase = pulisciIdEvento(e);
+        const idBase = pulisciIdEvento(e).toLowerCase();
 
         const nome = (e.nome_rilevato || e.nome || e.titolo || '').toLowerCase().trim();
         const citta = (e.citta || e.luogo || '').toLowerCase().trim();
-        const idComposito = pulisciIdEvento(`${nome}_${citta}`);
+        const idComposito = `${nome}_${citta}`;
 
-        return idBase === targetId || idComposito === targetId || nome === targetId;
+        return idBase === targetIdClean || idComposito === targetIdClean || nome === targetIdClean;
     }) || null;
 }
 
@@ -52,18 +51,17 @@ export function gestisciPreferito(ev) {
     if (!idEvento) return false;
 
     let preferiti = JSON.parse(localStorage.getItem('festeinvista_preferiti')) || [];
-    let preferitiPuliti = preferiti.map(id => pulisciIdEvento(id));
 
-    const index = preferitiPuliti.indexOf(idEvento);
+    const index = preferiti.indexOf(idEvento);
 
     if (index > -1) {
-        preferitiPuliti.splice(index, 1);
+        preferiti.splice(index, 1);
     } else {
-        preferitiPuliti.push(idEvento);
+        preferiti.push(idEvento);
     }
 
-    localStorage.setItem('festeinvista_preferiti', JSON.stringify(preferitiPuliti));
-    return preferitiPuliti.includes(idEvento);
+    localStorage.setItem('festeinvista_preferiti', JSON.stringify(preferiti));
+    return preferiti.includes(idEvento);
 }
 
 export function isPreferito(ev) {
@@ -71,7 +69,7 @@ export function isPreferito(ev) {
     if (!idEvento) return false;
 
     const preferiti = JSON.parse(localStorage.getItem('festeinvista_preferiti')) || [];
-    return preferiti.map(id => pulisciIdEvento(id)).includes(idEvento);
+    return preferiti.includes(idEvento);
 }
 
 export function creaPulsantePreferito(ev) {
@@ -103,17 +101,20 @@ export function creaPulsanteCondividi(ev) {
     btn.addEventListener('click', async () => {
         const titolo = ev.nome_rilevato || ev.nome || ev.titolo || 'Evento';
         const luogo = ev.citta || ev.luogo ? `📍 ${ev.citta || ev.luogo}\n` : '';
-        const testo = `🎉 *${titolo}*\n${luogo}Guarda i dettagli dell'evento su FesteInVista:`;
+        const messaggioTesto = `🎉 *${titolo}*\n${luogo}Guarda i dettagli dell'evento su FesteInVista:`;
 
         const idOriginale = ev.id || ev.nome_rilevato || ev.nome || ev.titolo || '';
         const urlBase = `${window.location.origin}/dati-evento.html`;
         const urlCondivisione = `${urlBase}?evento=${encodeURIComponent(idOriginale)}`;
 
+        const testoCompleto = `${messaggioTesto}\n${urlCondivisione}`;
+
         if (navigator.share) {
             try {
+                // Su smartphone passa il messaggio formattato
                 await navigator.share({
                     title: titolo,
-                    text: testo,
+                    text: messaggioTesto,
                     url: urlCondivisione
                 });
             } catch (err) {
@@ -121,11 +122,12 @@ export function creaPulsanteCondividi(ev) {
             }
         } else {
             try {
-                const testoCompletoDaCopiare = `${testo}\n${urlCondivisione}`;
-                await navigator.clipboard.writeText(testoCompletoDaCopiare);
-                alert('Link e dettagli dell\'evento copiati negli appunti!');
+                // Su PC/Browser desktop copia l'intero blocco (Testo + Link) negli appunti
+                await navigator.clipboard.writeText(testoCompleto);
+                alert('Dettagli e link dell\'evento copiati nei tuoi appunti!\nOra puoi incollarli su WhatsApp.');
             } catch (err) {
-                alert('Copia il link manualmente: ' + urlCondivisione);
+                // Fallback manuale in caso di permessi bloccati
+                window.prompt('Copia il testo e il link per condividere:', testoCompleto);
             }
         }
     });
@@ -137,7 +139,6 @@ export function renderAzioniEvento(containerId, ev) {
     const container = typeof containerId === 'string' ? document.getElementById(containerId) : containerId;
     if (!container || !ev) return;
 
-    // Salva automaticamente l'evento in localStorage appena vengono renderizzate le azioni
     try {
         localStorage.setItem('eventoSelezionatoDettaglio', JSON.stringify(ev));
     } catch (e) {
@@ -148,44 +149,3 @@ export function renderAzioniEvento(containerId, ev) {
     container.appendChild(creaPulsantePreferito(ev));
     container.appendChild(creaPulsanteCondividi(ev));
 }
-
-// ==========================================
-// ESECUZIONE AUTOMATICA PER dati-evento.html
-// ==========================================
-document.addEventListener('DOMContentLoaded', async () => {
-    // Controlliamo se ci troviamo nella pagina dati-evento.html
-    if (!window.location.pathname.includes('dati-evento.html')) return;
-
-    try {
-        const listaEventi = await fetchEventi();
-        const evento = recuperaEventoDaUrl(listaEventi);
-
-        const contenitoreMessaggio = document.querySelector('.card-messaggio') || document.getElementById('messaggio-errore');
-        const contenitoreDettagli = document.getElementById('dettagli-evento-container') || document.getElementById('evento-dettaglio');
-
-        if (evento) {
-            // Nascondi il messaggio "Nessun evento selezionato"
-            if (contenitoreMessaggio) contenitoreMessaggio.style.display = 'none';
-            if (contenitoreDettagli) contenitoreDettagli.style.display = 'block';
-
-            // Popola i campi principali se esistono nel DOM
-            const elTitolo = document.getElementById('titolo-evento');
-            if (elTitolo) elTitolo.textContent = evento.nome_rilevato || evento.nome;
-
-            const elCitta = document.getElementById('citta-evento');
-            if (elCitta) elCitta.textContent = evento.citta || evento.luogo || '';
-
-            const elDesc = document.getElementById('descrizione-evento');
-            if (elDesc) elDesc.textContent = evento.descrizione || '';
-
-            // Renderizza i pulsanti Preferiti e Condividi
-            renderAzioniEvento('azioni-evento-container', evento);
-        } else {
-            // Mostra la schermata "Nessun evento selezionato"
-            if (contenitoreMessaggio) contenitoreMessaggio.style.display = 'block';
-            if (contenitoreDettagli) contenitoreDettagli.style.display = 'none';
-        }
-    } catch (err) {
-        console.error("Errore durante il caricamento dell'evento in dati-evento.html:", err);
-    }
-});
