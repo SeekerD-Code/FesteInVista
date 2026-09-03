@@ -106,12 +106,13 @@ export function creaPulsanteCondividi(ev) {
         const urlBase = `${window.location.origin}/dati-evento.html`;
         const urlCondivisione = `${urlBase}?evento=${encodeURIComponent(idOriginale)}`;
 
-        // Uniamo il testo formattato e l'URL in una singola stringa
-        const messaggioCompleto = `🎉 *${titolo}*\n${luogo}Guarda i dettagli dell'evento su FesteInVista:\n${urlCondivisione}`;
+        // Rileva se l'utente è su un dispositivo mobile
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-        if (navigator.share) {
+        // SU MOBILE (se c'è navigator.share)
+        if (isMobile && navigator.share) {
+            const messaggioCompleto = `🎉 *${titolo}*\n${luogo}Guarda i dettagli dell'evento su FesteInVista:\n${urlCondivisione}`;
             try {
-                // Passiamo SOLO 'text' per evitare che l'OS/WhatsApp scarti il messaggio
                 await navigator.share({
                     title: titolo,
                     text: messaggioCompleto
@@ -120,11 +121,13 @@ export function creaPulsanteCondividi(ev) {
                 console.log('Condivisione annullata:', err);
             }
         } else {
+            // SU PC / DESKTOP (o browser senza share): Copia ESCLUSIVAMENTE il link negli appunti
             try {
-                await navigator.clipboard.writeText(messaggioCompleto);
-                alert('Dettagli e link dell\'evento copiati nei tuoi appunti!\nOra puoi incollarli su WhatsApp.');
+                await navigator.clipboard.writeText(urlCondivisione);
+                alert('Link dell\'evento copiato negli appunti!');
             } catch (err) {
-                window.prompt('Copia il testo e il link per condividere:', messaggioCompleto);
+                // Fallback nel caso in cui i permessi appunti siano bloccati
+                window.prompt('Copia il link dell\'evento:', urlCondivisione);
             }
         }
     });
