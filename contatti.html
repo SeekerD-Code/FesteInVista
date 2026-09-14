@@ -109,7 +109,7 @@
         </div>
 
         <!-- Form di Segnalazione (Collegato a FormSubmit gratuito - Sostituisci l'email con la tua) -->
-        <form action="https://formsubmit.co/joycrew@seekerdcode.it" method="POST" style="background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; gap: 15px;">
+        <form action="https://formsubmit.co/joycrew@seekerdcode.it" method="POST" enctype="multipart/form-data" style="background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; gap: 15px;">
 
             <!-- Configurazione opzionale per FormSubmit -->
             <input type="hidden" name="_subject" value="Nuova segnalazione evento da FesteInVista!">
@@ -166,6 +166,28 @@
                 <textarea id="descrizione-evento" name="Descrizione" rows="4" placeholder="Raccontaci qualcosa sull'evento..." style="padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; resize: vertical;"></textarea>
             </div>
 
+
+            <!-- Sezione Caricamento File Multipli e Separati -->
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+                <label style="font-weight: 600; font-size: 0.9rem; color: #444;">Locandina, Immagini o Documenti PDF</label>
+                <p style="font-size: 0.8rem; color: #666; margin: 0;">Puoi selezionare file anche da cartelle diverse in momenti successivi.</p>
+
+                <!-- Input file nascosto o affiancato, gestito via JS -->
+                <input type="file" id="file-selector" accept="image/*,.pdf" multiple style="display: none;">
+
+                <button type="button" id="btn-aggiungi-file" style="background: #e0e0e0; color: #333; border: none; padding: 10px 14px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; align-self: flex-start;">
+                    📁 Seleziona file da aggiungere
+                </button>
+
+                <!-- Lista visiva dei file in coda con pulsante di eliminazione -->
+                <div id="container-lista-file" style="display: flex; flex-direction: column; gap: 6px; margin-top: 5px;">
+                    <span style="font-size: 0.85rem; color: #888; font-style: italic;" id="nessun-file-msg">Nessun file selezionato</span>
+                </div>
+
+                <!-- Input reale che verrà inviato dal form -->
+                <input type="file" id="file-reale-form" name="allegati[]" multiple style="display: none;" required>
+            </div>
+
             <div style="display: flex; flex-direction: column; gap: 5px;">
                 <label for="email-mittente" style="font-weight: 600; font-size: 0.9rem; color: #444;">La tua Email (per eventuali contatti) *</label>
                 <input type="email" id="email-mittente" name="Email Contatto" required placeholder="joycrew@seekerdcode.it" style="padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
@@ -187,7 +209,7 @@
 
 <!-- Script globale per la gestione del menu a tendina (Drawer) -->
 <script type="module" src="js/app.js"></script>
-<script type="module" src="js/intervalli_di_date.js"></script>
+<script type="module" src="js/elementi-form.js"></script>
 
 </body>
 </html>
