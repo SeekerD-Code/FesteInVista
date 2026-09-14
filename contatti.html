@@ -137,16 +137,24 @@
                 </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                <div style="display: flex; flex-direction: column; gap: 5px;">
-                    <label for="data-inizio" style="font-weight: 600; font-size: 0.9rem; color: #444;">Data Inizio *</label>
-                    <input type="date" id="data-inizio" name="Data Inizio" required style="padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+                <label style="font-weight: 600; font-size: 0.9rem; color: #444;">Intervalli di Date dell'Evento *</label>
+                <p style="font-size: 0.8rem; color: #666; margin: 0;">Se l'evento si svolge in più periodi separati, aggiungi un intervallo per ciascuno.</p>
+
+                <div id="container-intervalli" style="display: flex; flex-direction: column; gap: 10px;">
+                    <!-- Primo intervallo (default obbligatorio) -->
+                    <div class="intervallo-row" style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: center;">
+                        <input type="date" name="Data Inizio[]" required style="padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
+                        <input type="date" name="Data Fine[]" style="padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
+                        <button type="button" class="btn-rimuovi" style="background: #ff4d4d; color: white; border: none; padding: 10px 12px; border-radius: 8px; cursor: pointer; display: none;" title="Rimuovi intervallo">✕</button>
+                    </div>
                 </div>
-                <div style="display: flex; flex-direction: column; gap: 5px;">
-                    <label for="data-fine" style="font-weight: 600; font-size: 0.9rem; color: #444;">Data Fine</label>
-                    <input type="date" id="data-fine" name="Data Fine" style="padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
-                </div>
+
+                <button type="button" id="btn-aggiungi-intervallo" style="background: #e0e0e0; color: #333; border: none; padding: 8px 12px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; align-self: flex-start; margin-top: 5px;">
+                    + Aggiungi un altro intervallo di date
+                </button>
             </div>
+
 
             <div style="display: flex; flex-direction: column; gap: 5px;">
                 <label for="link-evento" style="font-weight: 600; font-size: 0.9rem; color: #444;">Sito Web o Link Social di Riferimento</label>
@@ -179,6 +187,7 @@
 
 <!-- Script globale per la gestione del menu a tendina (Drawer) -->
 <script type="module" src="js/app.js"></script>
+<script type="module" src="js/intervalli_di_date.js"></script>
 
 </body>
 </html>
