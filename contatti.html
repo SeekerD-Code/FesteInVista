@@ -167,26 +167,13 @@
             </div>
 
 
-            <!-- Sezione Caricamento File Multipli e Separati -->
-            <div style="display: flex; flex-direction: column; gap: 8px;">
-                <label style="font-weight: 600; font-size: 0.9rem; color: #444;">Locandina, Immagini o Documenti PDF</label>
-                <p style="font-size: 0.8rem; color: #666; margin: 0;">Puoi selezionare file anche da cartelle diverse in momenti successivi.</p>
-
-                <!-- Input file nascosto o affiancato, gestito via JS -->
-                <input type="file" id="file-selector" accept="image/*,.pdf" multiple style="display: none;">
-
-                <button type="button" id="btn-aggiungi-file" style="background: #e0e0e0; color: #333; border: none; padding: 10px 14px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; align-self: flex-start;">
-                    📁 Seleziona file da aggiungere
-                </button>
-
-                <!-- Lista visiva dei file in coda con pulsante di eliminazione -->
-                <div id="container-lista-file" style="display: flex; flex-direction: column; gap: 6px; margin-top: 5px;">
-                    <span style="font-size: 0.85rem; color: #888; font-style: italic;" id="nessun-file-msg">Nessun file selezionato</span>
-                </div>
-
-                <!-- Input reale che verrà inviato dal form -->
-                <input type="file" id="file-reale-form" name="allegati[]" multiple style="display: none;" required>
+            <!-- Sezione Caricamento File Semplice e Nativo -->
+            <div style="display: flex; flex-direction: column; gap: 5px;">
+                <label for="allegati-evento" style="font-weight: 600; font-size: 0.9rem; color: #444;">Locandina o Immagini dell'Evento</label>
+                <p style="font-size: 0.8rem; color: #666; margin: 0;">Puoi allegare la locandina, una foto o un documento PDF.</p>
+                <input type="file" id="allegati-evento" name="allegati[]" accept="image/*,.pdf" multiple style="padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 0.9rem; background: #fff;">
             </div>
+
 
             <div style="display: flex; flex-direction: column; gap: 5px;">
                 <label for="email-mittente" style="font-weight: 600; font-size: 0.9rem; color: #444;">La tua Email (per eventuali contatti) *</label>
